@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  font-family: "Rubik", sans-serif;
+  background-color: #ebeef2;
+}
+
+.box-shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.searchField:focus,
+.btnShadow:focus,
+.searchField:active,
+.btnShadow:active,
+.searchField:hover,
+.btnShadow:hover {
+  box-shadow: 4px 2px 5px #000;
+}
+
+.btnActive {
+  box-shadow: 4px 2px 5px #000;
+}
+
+.skeleton {
+  opacity: 0.7;
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.skeletonText {
+  @apply h-[25px] mb-1 rounded;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 70%);
+  }
+
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
