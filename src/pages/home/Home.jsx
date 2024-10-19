@@ -23,6 +23,14 @@ const Home = () => {
   const [storedPageNumber, setStoredPageNumber] = useState(null);
   const [storedTopic, setStoredTopic] = useState("");
   const stored = JSON.parse(localStorage.getItem("persists"));
+  const pageOneTopics = [
+    "fiction",
+    "literature",
+    "drama",
+    "history",
+    "england",
+  ];
+
   useEffect(() => {
     if (stored) {
       setStoredTopic(stored?.singleTopic);
@@ -60,19 +68,14 @@ const Home = () => {
     }
   }
 
-  const { data, loading, reFetch } = useFetch(url);
+  const { data, loading } = useFetch(url);
 
   const books = data?.results;
-
-  useEffect(() => {
-    if (loading) {
-      reFetch();
-    }
-  }, [loading, reFetch]);
 
   const allTopics = books?.reduce((acc, book) => {
     return acc.concat(book.subjects, book.bookshelves);
   }, []);
+
   const { topics } = useTopWords(allTopics, loading);
 
   const handleNext = () => {
@@ -120,11 +123,11 @@ const Home = () => {
       <Navbar />
       <div className="mb-20 lg:mt-10 mt-5 ">
         <div className="lg:flex lg:gap-10 xl:gap-16">
-          <div className="w-[90%] mx-auto lg:w-[28%] xl:w-[15%]  mb-10 lg:mb-0 flex md:flex-row  lg:justify-normal  flex-col  lg:flex-col  gap-5  lg:gap-5 md:gap-3 ">
+          <div className="  mx-auto lg:w-[28%] xl:w-[15%]  mb-10 lg:mb-0 flex md:flex-row  lg:justify-normal  flex-col  lg:flex-col  gap-5  lg:gap-5 md:gap-3 ">
             <div
               onClick={() => setToggle(!toggle)}
               className={`cursor-pointer btnShadow border bg-white  py-3 rounded-lg 
-                flex items-center  justify-between px-5  lg:w-full w-[350px] md:mx-0 lg:mx-0 mx-auto `}
+                flex items-center  justify-between px-5  lg:w-full w-[90%] md:mx-0 lg:mx-0 mx-auto `}
             >
               <h2 className="flex gap-2">
                 Filter{" "}
@@ -145,28 +148,45 @@ const Home = () => {
                 md:py-1.5  
                p-4 lg:p-4  md:px-0 rounded-lg font-normal text-sm lg:flex-col md:flex md:gap-4  lg:gap-2 md:justify-center  border"
               >
-                {topics.map((topic, index) => (
-                  <div
-                    onClick={() => handleTopic(topic)}
-                    key={index}
-                    className={`${
-                      topicQuery === topic ? "bg-[#EBEEF2]" : ""
-                    }  cursor-pointer  flex items-center  md:gap-0 lg:gap-3  rounded-lg py-2 pl-3 md:pr-2  hover:bg-[#EBEEF2]`}
-                  >
-                    <MdOutlineDoubleArrow className="" />
+                {topics?.length > 0
+                  ? topics?.map((topic, index) => (
+                      <div
+                        onClick={() => handleTopic(topic)}
+                        key={index}
+                        className={`${
+                          topicQuery === topic ? "bg-[#EBEEF2]" : ""
+                        }  cursor-pointer  flex items-center  md:gap-0 lg:gap-3  rounded-lg py-2 pl-3 md:pr-2  hover:bg-[#EBEEF2]`}
+                      >
+                        <MdOutlineDoubleArrow className="" />
 
-                    <h2 className="capitalize">
-                      {" "}
-                      {topic && topic.split("/")[0]}
-                    </h2>
-                  </div>
-                ))}
+                        <h2 className="capitalize">
+                          {" "}
+                          {topic && topic.split("/")[0]}
+                        </h2>
+                      </div>
+                    ))
+                  : pageOneTopics.map((topic, index) => (
+                      <div
+                        onClick={() => handleTopic(topic)}
+                        key={index}
+                        className={`${
+                          topicQuery === topic ? "bg-[#EBEEF2]" : ""
+                        }  cursor-pointer  flex items-center  md:gap-0 lg:gap-3  rounded-lg py-2 pl-3 md:pr-2  hover:bg-[#EBEEF2]`}
+                      >
+                        <MdOutlineDoubleArrow className="" />
+
+                        <h2 className="capitalize">
+                          {" "}
+                          {topic && topic.split("/")[0]}
+                        </h2>
+                      </div>
+                    ))}
                 <button
                   className="mt-2 w-full lg:max-w-max px-5 mx-auto lg:mt-0  md:hidden lg:block
                    font-medium text-white py-2 rounded bg-primary"
                   onClick={handleRefetch}
                 >
-                  Go FirstPage
+                  Reset Data
                 </button>
               </div>
             ) : (

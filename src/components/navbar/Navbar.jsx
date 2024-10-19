@@ -122,11 +122,11 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        <div className="md:hidden searchField w-[350px] relative  mx-auto flex  bg-[#F3F4F6]  rounded-lg items-center">
+        <div className="md:hidden searchField  relative  mx-auto flex  bg-[#F3F4F6]  rounded-lg items-center">
           <input
             onChange={handleChange}
             defaultValue={stored?.searchValue}
-            className="pl-3 text-[#959595]  rounded-lg text-lg w-full py-2.5 outline-none lg:border border-[#EBEEF2] focus:border bg-[#F3F4F6] lg:bg-[#ffffff]"
+            className="pl-3 text-[#959595]  rounded-lg text-lg py-2.5 outline-none lg:border border-[#EBEEF2] focus:border bg-[#F3F4F6] lg:bg-[#ffffff]"
             type="text"
             placeholder="Search by title"
           />
